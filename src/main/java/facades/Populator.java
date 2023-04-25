@@ -6,7 +6,9 @@
 package facades;
 
 import dtos.CarDTO;
+import dtos.PersonDTO;
 import dtos.RenameMeDTO;
+import entities.Person;
 import entities.RenameMe;
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
@@ -19,10 +21,13 @@ public class Populator {
     public static void populate(){
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         CarFacade facade = CarFacade.getCarFacade(emf);
+        PersonFacade personFacade = PersonFacade.getPersonFacade(emf);
         facade.create(new CarDTO("Volvo", "V70", "ABC123"));
         facade.create(new CarDTO("BMW", "X5", "ABC123"));
         facade.create(new CarDTO("Audi", "R8", "ABC123"));
-
+        personFacade.create(new PersonDTO("Jens", "Jensen"));
+        personFacade.create(new PersonDTO("Hans", "Hansen"));
+        personFacade.create(new PersonDTO("Peter", "Petersen"));
     }
     
     public static void main(String[] args) {

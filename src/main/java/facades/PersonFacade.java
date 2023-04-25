@@ -1,9 +1,9 @@
 package facades;
 
 import dtos.CarDTO;
-import dtos.RenameMeDTO;
+import dtos.PersonDTO;
 import entities.Car;
-import entities.RenameMe;
+import entities.Person;
 import utils.EMF_Creator;
 
 import javax.persistence.EntityManager;
@@ -14,13 +14,13 @@ import java.util.List;
 /**
  * Rename Class to a relevant name Add add relevant facade methods
  */
-public class CarFacade {
+public class PersonFacade {
 
-    private static CarFacade instance;
+    private static PersonFacade instance;
     private static EntityManagerFactory emf;
 
     //Private Constructor to ensure Singleton
-    private CarFacade() {
+    private PersonFacade() {
     }
 
 
@@ -29,10 +29,10 @@ public class CarFacade {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static CarFacade getCarFacade(EntityManagerFactory _emf) {
+    public static PersonFacade getPersonFacade(EntityManagerFactory _emf) {
         if (instance == null) {
             emf = _emf;
-            instance = new CarFacade();
+            instance = new PersonFacade();
         }
         return instance;
     }
@@ -41,17 +41,17 @@ public class CarFacade {
         return emf.createEntityManager();
     }
 
-    public CarDTO create(CarDTO carDTO) {
-        Car car = new Car(carDTO.getBrand(), carDTO.getModel(), carDTO.getNumberPlate());
+    public PersonDTO create(PersonDTO personDTO) {
+        Person person = new Person(personDTO.getFirstName(), personDTO.getLastName());
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(car);
+            em.persist(person);
             em.getTransaction().commit();
         } finally {
             em.close();
         }
-        return new CarDTO(car);
+        return new PersonDTO(person);
     }
 
     public List<CarDTO> getAllCars() {
@@ -62,13 +62,13 @@ public class CarFacade {
     }
 
     // Get a car by id
-    public CarDTO getCarById(Long id) {
+    public PersonDTO getPersonById(Long id) {
         EntityManager em = emf.createEntityManager();
-        Car car = em.find(Car.class, id);
-        if (car == null) {
+        Person person = em.find(Person.class, id);
+        if (person == null) {
             throw new IllegalArgumentException("No car with that id");
         }
-        return new CarDTO(car);
+        return new PersonDTO(person);
     }
 
 
@@ -84,21 +84,25 @@ public class CarFacade {
         }
     }
 
-    // Get the id of the person who owns the car
-    public void getOwnerId(Long id) {
+    //Add a car to a person
+    public void addCarToPerson(Long personId, Long carId) {
         EntityManager em = emf.createEntityManager();
-        Car car = em.find(Car.class, id);
+        Person person = em.find(Person.class, personId);
+        Car car = em.find(Car.class, carId);
         try {
-            System.out.println(car.getPerson_cars().getId());
-        } catch (NullPointerException e) {
-            System.out.println("No owner");
+            em.getTransaction().begin();
+            person.addCar(car);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
         }
+
     }
 
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
-        CarFacade fe = getCarFacade(emf);
-        fe.getOwnerId(1L);
+        PersonFacade fe = getPersonFacade(emf);
+        fe.addCarToPerson(1L, 1L);
 
     }
 
