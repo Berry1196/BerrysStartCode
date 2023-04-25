@@ -60,7 +60,4 @@ public class CarFacadeTest {
         assertEquals("Ford", car.getBrand());
         System.out.println(car);
     }
-
-
-
 }
