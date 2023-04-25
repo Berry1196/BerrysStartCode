@@ -19,6 +19,7 @@ public class CarDTO {
     private String numberPlate;
 
 
+
     public CarDTO(String brand, String model, String numberPlate) {
         this.brand = brand;
         this.model = model;
