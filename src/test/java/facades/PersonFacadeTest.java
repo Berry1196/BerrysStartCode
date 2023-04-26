@@ -44,8 +44,8 @@ public class PersonFacadeTest {
         c2 = new Car("Tesla", "Model 3", "CD67890");
         try {
             em.getTransaction().begin();
-            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.createNamedQuery("Car.deleteAllRows").executeUpdate();
+            em.createNamedQuery("Person.deleteAllRows").executeUpdate();
             em.persist(p1);
             em.persist(p2);
             em.persist(p3);
