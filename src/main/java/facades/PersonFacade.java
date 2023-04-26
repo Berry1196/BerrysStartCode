@@ -66,7 +66,7 @@ public class PersonFacade {
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, id);
         if (person == null) {
-            throw new IllegalArgumentException("No car with that id");
+            throw new NullPointerException("No person with that id");
         }
         return new PersonDTO(person);
     }
@@ -102,7 +102,15 @@ public class PersonFacade {
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
         PersonFacade fe = getPersonFacade(emf);
-        fe.addCarToPerson(1L, 1L);
+//        CarFacade ce = CarFacade.getCarFacade(emf);
+////        Person p1 = new Person("Jens", "Jensen");
+//        Car c1 = new Car("Tesla", "Model 3", "12345678");
+//        fe.create(new PersonDTO(p1));
+//        ce.create(new CarDTO(c1));
+//       fe.addCarToPerson(4L, 4L);
+//       System.out.println(c1.getPerson_cars().getId());
+
+        System.out.println(fe.getPersonById(1L));
 
     }
 

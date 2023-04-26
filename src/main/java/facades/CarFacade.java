@@ -85,7 +85,7 @@ public class CarFacade {
     }
 
     // Get the id of the person who owns the car
-    public void getOwnerId(Long id) {
+    public Long getOwnerId(Long id) {
         EntityManager em = emf.createEntityManager();
         Car car = em.find(Car.class, id);
         try {
@@ -93,6 +93,7 @@ public class CarFacade {
         } catch (NullPointerException e) {
             System.out.println("No owner");
         }
+        return car.getPerson_cars().getId();
     }
 
     public static void main(String[] args) {
