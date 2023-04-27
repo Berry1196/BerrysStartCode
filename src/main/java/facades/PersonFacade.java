@@ -54,14 +54,14 @@ public class PersonFacade {
         return new PersonDTO(person);
     }
 
-    public List<CarDTO> getAllCars() {
+    public List<PersonDTO> getAllPersons() {
         EntityManager em = emf.createEntityManager();
-        TypedQuery<Car> query = em.createQuery("SELECT c FROM Car c", Car.class);
-        List<Car> cars = query.getResultList();
-        return new CarDTO().getDTOs(cars);
+        TypedQuery<Person> query = em.createQuery("SELECT p FROM Person p", Person.class);
+        List<Person> persons = query.getResultList();
+        return new PersonDTO().getDTOs(persons);
     }
 
-    // Get a car by id
+    // Get a person by id
     public PersonDTO getPersonById(Long id) {
         EntityManager em = emf.createEntityManager();
         Person person = em.find(Person.class, id);
@@ -107,10 +107,10 @@ public class PersonFacade {
 //        Car c1 = new Car("Tesla", "Model 3", "12345678");
 //        fe.create(new PersonDTO(p1));
 //        ce.create(new CarDTO(c1));
-//       fe.addCarToPerson(4L, 4L);
+//       fe.addCarToPerson(2L, 2L);
 //       System.out.println(c1.getPerson_cars().getId());
-
-        System.out.println(fe.getPersonById(1L));
+        System.out.println(fe.getAllPersons());
+//        fe.addCarToPerson(3L,3L);
 
     }
 

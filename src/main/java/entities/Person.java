@@ -20,7 +20,7 @@ public class Person {
     private Long id;
     private String firstName;
     private String lastName;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person_cars")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
     private List<Car> cars = new ArrayList();
 
     public Person(String firstName, String lastName) {
@@ -31,6 +31,8 @@ public class Person {
 
     public void addCar(Car car) {
         cars.add(car);
-        car.setPerson_cars(this);
+        car.setPerson(this);
     }
+
+
 }

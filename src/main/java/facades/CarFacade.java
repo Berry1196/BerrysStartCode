@@ -89,18 +89,30 @@ public class CarFacade {
         EntityManager em = emf.createEntityManager();
         Car car = em.find(Car.class, id);
         try {
-            System.out.println(car.getPerson_cars().getId());
+            System.out.println(car.getPerson().getId());
         } catch (NullPointerException e) {
             System.out.println("No owner");
         }
-        return car.getPerson_cars().getId();
+        return car.getPerson().getId();
+    }
+
+    // get owner of car
+    public String getOwner(Long id) {
+        EntityManager em = emf.createEntityManager();
+        Car car = em.find(Car.class, id);
+        try {
+            System.out.println(car.getPerson().getFirstName());
+        } catch (NullPointerException e) {
+            System.out.println("No owner");
+        }
+        return car.getPerson().getFirstName();
     }
 
     public static void main(String[] args) {
         emf = EMF_Creator.createEntityManagerFactory();
         CarFacade fe = getCarFacade(emf);
-        fe.getOwnerId(1L);
-
+        System.out.println(fe.getAllCars());
+        System.out.println(fe.getOwnerId(1L));
     }
 
 

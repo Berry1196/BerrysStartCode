@@ -1,8 +1,10 @@
 package dtos;
 
 import entities.Car;
+import entities.Person;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +14,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarDTO {
+public class CarDTO implements Serializable {
     private Long id;
     private String brand;
     private String model;
     private String numberPlate;
-    private PersonDTO person;
+    private InnerPersonDTO person;
 
 
 
@@ -35,6 +37,9 @@ public class CarDTO {
         this.brand = c.getBrand();
         this.model = c.getModel();
         this.numberPlate = c.getNumberPlate();
+        if (c.getPerson() != null){
+            this.person = new InnerPersonDTO(c.getPerson());
+        }
     }
 
 
@@ -43,7 +48,35 @@ public class CarDTO {
         car.forEach(c->carDTOs.add(new CarDTO(c)));
         return carDTOs;
     }
+    @Getter
+    @Setter
+    @ToString
+    @Data
+    @EqualsAndHashCode
+    public static class InnerPersonDTO implements Serializable {
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private List<CarDTO> cars;
 
+        public InnerPersonDTO(Long id, String firstName, String lastName) {
+            this.id = id;
+            this.firstName = firstName;
+            this.lastName = lastName;
+
+        }
+
+        public InnerPersonDTO(Person person) {
+            if (person.getId() != null){
+                this.id = person.getId();
+            }
+            this.firstName = person.getFirstName();
+            this.lastName = person.getLastName();
+
+        }
+
+
+    }
 
 
 }

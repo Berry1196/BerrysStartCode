@@ -28,6 +28,7 @@ public class Populator {
         personFacade.create(new PersonDTO("Jens", "Jensen"));
         personFacade.create(new PersonDTO("Hans", "Hansen"));
         personFacade.create(new PersonDTO("Peter", "Petersen"));
+        personFacade.addCarToPerson(1L, 1L);
     }
     
     public static void main(String[] args) {
